@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>State</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body>
+    <h2 class="uppercase">State code : {{state}}</h2>
+    <div class="div1">
+    <h3>You can also choose start and end dates to display cases</h3>
+    <form class="form-container" method="POST" action="/dates">
+        <label for="fromDate">From Date:</label>
+        <input type="date" id="fromDate" name="fromDate" min="2020-03-04" max="2021-03-07" value="2021-03-07" required>
+        <label for="toDate">To Date:</label>
+        <input type="date" id="toDate" name="toDate" min="2020-03-04" max="2021-03-07" value="2021-03-07" required>
+        <input type="hidden" id="state" name="state" value="{{state}}">
+        <input class="button" type="submit" value="Submit">
+    </form>
+</div>
+  <div class=".table-container ">
+<caption>Case display from the last 7 days</caption>
+<table style="border:2px">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Positive Cases</th>
+            <th>Negative Cases</th>
+        </tr>
+    </thead>
+    <tbody id="data">
+    </tbody>
+</table>
+<script>
+    function populateTable(){
+        var dates = "{{dts}}".split(',');
+        var positive_cases = "{{pos}}".split(',');
+        var negative_cases = "{{neg}}".split(',');
+        var table = document.getElementById("data");
+        console.log(typeof dates);
+        for (var i = 0; i < dates.length; i++) {
+            var row = table.insertRow(i);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+    
+            cell1.innerHTML = dates[i];
+            cell2.innerHTML = positive_cases[i];
+            cell3.innerHTML = negative_cases[i];
+        }
+        console.log("Hello, World!"); 
+    };
+    populateTable();
+    </script>
+</div>
+</body>
+</html>
